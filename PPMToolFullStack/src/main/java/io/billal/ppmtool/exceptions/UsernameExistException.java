@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class UserExistException extends RuntimeException{
+public class UsernameExistException extends RuntimeException{
 
-    public UserExistException(String message) {
+    public UsernameExistException(String message) {
         super(message);
     }
 }

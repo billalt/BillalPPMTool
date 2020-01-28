@@ -1,18 +1,18 @@
 package io.billal.ppmtool.exceptions;
 
-public class UserExistExceptionResponse {
+public class UsernameExistExceptionResponse {
 
-    private String userAlreadyExist;
+    private String usernameAlreadyExist;
 
-    public UserExistExceptionResponse(String userAlreadyExist) {
-        this.userAlreadyExist = userAlreadyExist;
+    public UsernameExistExceptionResponse(String userAlreadyExist) {
+        this.usernameAlreadyExist = userAlreadyExist;
     }
 
-    public String getUserAlreadyExist() {
-        return userAlreadyExist;
+    public String getUsernameAlreadyExist() {
+        return usernameAlreadyExist;
     }
 
-    public void setUserAlreadyExist(String userAlreadyExist) {
-        this.userAlreadyExist = userAlreadyExist;
+    public void setUsernameAlreadyExist(String usernameAlreadyExist) {
+        this.usernameAlreadyExist = usernameAlreadyExist;
     }
 }

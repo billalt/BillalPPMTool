@@ -1,7 +1,6 @@
 package io.billal.ppmtool.services;
 
 import io.billal.ppmtool.domain.Backlog;
-import io.billal.ppmtool.domain.Project;
 import io.billal.ppmtool.domain.ProjectTask;
 import io.billal.ppmtool.exceptions.ProjectNotFoundException;
 import io.billal.ppmtool.repositories.BacklogRepository;
@@ -9,6 +8,8 @@ import io.billal.ppmtool.repositories.ProjectRepository;
 import io.billal.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.security.Principal;
 
 
 @Service
@@ -23,11 +24,14 @@ public class ProjectTaskService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask){
+    @Autowired
+    private ProjectService projectService;
 
-        try{
+    public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask, Principal principal){
+
+
             //ProjectTasks to be add to a specific project, project != null, Backlog exists
-            Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+            Backlog backlog = projectService.findProjectByIdentifier(projectIdentifier ,principal).getBacklog();//backlogRepository.findByProjectIdentifier(projectIdentifier);
 
             //Set the Backlog to ProjectTasks
             projectTask.setBacklog(backlog);
@@ -54,25 +58,19 @@ public class ProjectTaskService {
             }
 
             return projectTaskRepository.save(projectTask);
-        }catch (Exception e){
-            throw new ProjectNotFoundException("Project Not Found");
-        }
-
 
     }
 
-    public Iterable<ProjectTask> findBacklogById(String backlog_id) {
+    public Iterable<ProjectTask> findBacklogById(String project_id, Principal principal) {
 
-        Project project = projectRepository.findByProjectIdentifier(backlog_id);
+        projectService.findProjectByIdentifier(project_id , principal);
 
-        if(project == null){
-            throw new ProjectNotFoundException("Project with ID: '" +backlog_id+"' does not exist");
-        }
-
-        return projectTaskRepository.findByProjectIdentifierOrderByPriority(backlog_id);
+        return projectTaskRepository.findByProjectIdentifierOrderByPriority(project_id);
     }
 
-    public ProjectTask findPTByProjectSequence(String backlog_id, String sequence){
+    public ProjectTask findPTByProjectSequence(String backlog_id, String sequence, Principal principal){
+
+        projectService.findProjectByIdentifier(backlog_id , principal);
 
         //make sure we are searching on the right backlog
         Backlog backlog = backlogRepository.findByProjectIdentifier(backlog_id);
@@ -95,15 +93,15 @@ public class ProjectTaskService {
         return projectTask;
     }
 
-    public ProjectTask updateByProjectSequence(ProjectTask projectTask , String backlog_id , String projectTask_id){
-        ProjectTask projectTask1 = findPTByProjectSequence(backlog_id , projectTask_id);
+    public ProjectTask updateByProjectSequence(ProjectTask projectTask, String backlog_id, String projectTask_id, Principal principal){
+        ProjectTask projectTask1 = findPTByProjectSequence(backlog_id , projectTask_id, principal);
         projectTask1 = projectTask;
         return  projectTaskRepository.save(projectTask1);
     }
 
-    public void deletePTByProjectSequence(String project_id, String projectTask_id){
+    public void deletePTByProjectSequence(String project_id, String projectTask_id, Principal principal){
 
-        ProjectTask projectTask = findPTByProjectSequence(project_id , projectTask_id);
+        ProjectTask projectTask = findPTByProjectSequence(project_id , projectTask_id, principal);
         projectTaskRepository.delete(projectTask);
     }
 }
