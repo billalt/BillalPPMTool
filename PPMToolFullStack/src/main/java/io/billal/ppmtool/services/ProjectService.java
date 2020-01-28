@@ -71,7 +71,7 @@ public class ProjectService {
         if(!project.getProjectLeader().equals(principal.getName())){
             throw new ProjectNotFoundException("Project '" + projectId.toUpperCase() + "' not found in your account");
         }
-        
+
         return project;
     }
 
