@@ -41,7 +41,7 @@ class AddProject extends Component {
       start_date: this.state.start_date,
       end_date: this.state.end_date
     };
-
+    console.log("newProject = ", newProject);
     this.props.createProject(newProject, this.props.history);
   }
 
@@ -66,7 +66,7 @@ class AddProject extends Component {
                       placeholder="Project Name"
                       name="projectName"
                       value={this.state.projectName}
-                      onChange={this.onChange.bind(this)}
+                      onChange={this.onChange}
                     />
                     {errors.projectName && (
                       <div className="invalid-feedback">

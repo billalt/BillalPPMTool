@@ -21,6 +21,9 @@ public class UserValidator implements Validator {
         if(user.getPassword() == null){
             user.setPassword("");
         }
+        if(user.getValidationKey() == null){
+            user.setValidationKey("");
+        }
         if(user.getPassword().length() <6){
             if(user.getPassword().isEmpty())
                 errors.rejectValue("password","Miss", "Password is required");
@@ -35,8 +38,14 @@ public class UserValidator implements Validator {
                 errors.rejectValue("confirmPassword","Match", "Passwords must match");
         }
 
-        //confirmPassword
-
+        if(!user.getValidationKey().equals("6zy5ht")){
+            if(user.getValidationKey().isEmpty()){
+                errors.rejectValue("validationKey","Miss", "Validation Key is required");
+            }
+            else{
+                errors.rejectValue("validationKey","Match", "Wrong Validation Key, please ask Billal for new Validation Key");
+            }
+        }
 
 
     }

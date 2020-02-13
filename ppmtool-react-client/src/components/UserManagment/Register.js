@@ -13,6 +13,7 @@ class Register extends Component {
       fullName: "",
       password: "",
       confirmPassword: "",
+      validationKey: "",
       errors: {}
     };
 
@@ -42,7 +43,8 @@ class Register extends Component {
       username: this.state.username,
       fullName: this.state.fullName,
       password: this.state.password,
-      confirmPassword: this.state.confirmPassword
+      confirmPassword: this.state.confirmPassword,
+      validationKey: this.state.validationKey
     };
 
     this.props.createNewUser(newUser, this.props.history);
@@ -122,6 +124,23 @@ class Register extends Component {
                   {errors.confirmPassword && (
                     <div className="invalid-feedback">
                       {errors.confirmPassword}
+                    </div>
+                  )}
+                </div>
+                <div className="form-group">
+                  <input
+                    type="password"
+                    className={classnames("form-control form-control-lg", {
+                      "is-invalid": errors.validationKey
+                    })}
+                    placeholder="Validation Key"
+                    name="validationKey"
+                    value={this.state.validationKey}
+                    onChange={this.onChange}
+                  />
+                  {errors.validationKey && (
+                    <div className="invalid-feedback">
+                      {errors.validationKey}
                     </div>
                   )}
                 </div>

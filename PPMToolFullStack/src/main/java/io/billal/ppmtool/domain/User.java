@@ -34,6 +34,9 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
+    @Transient
+    private String validationKey;
+
     private Date created_At;
     private Date updated_At;
 
@@ -98,6 +101,14 @@ public class User implements UserDetails {
 
     public void setUpdated_At(Date updated_At) {
         this.updated_At = updated_At;
+    }
+
+    public String getValidationKey() {
+        return validationKey;
+    }
+
+    public void setValidationKey(String validationKey) {
+        this.validationKey = validationKey;
     }
 
     @PrePersist

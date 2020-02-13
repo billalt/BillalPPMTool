@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/securityActions";
-
+import logo from "../../amdocs.jpg";
+import alwazLogo from "../../alwazLogo.png";
 class Header extends Component {
   logout() {
     this.props.logout();
@@ -59,18 +60,31 @@ class Header extends Component {
       </div>
     );
 
+    const setGeneralLogo = <img className="App-logo" src={logo} alt="Logo" />;
+
+    const setAlwazLogo = (
+      <img className="App-logo" src={alwazLogo} alt="Logo" />
+    );
+
     let headerLinks;
+
+    let dynamicLogo;
 
     if (validToken && user) {
       headerLinks = userIsAuthenticated;
+      dynamicLogo = setAlwazLogo;
     } else {
       headerLinks = userIsNotAuthenticated;
+      dynamicLogo = setGeneralLogo;
     }
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
         <div className="container">
+          {
+            //dynamicLogo
+          }
           <Link className="navbar-brand" to="/">
-            Personal Project Management Tool
+            ניהול תיקי לוקוחות למשרד עורכי דין
           </Link>
           <button
             className="navbar-toggler"
